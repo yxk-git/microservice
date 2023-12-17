@@ -1,0 +1,23 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: customer
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xxxxxx/customer
+    username: xxxxxx
+    password: xxxxxx
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.microcode
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://xxxxxx/eureka/
