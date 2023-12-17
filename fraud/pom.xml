@@ -31,6 +31,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.boot.starter.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <!-- mysql8.0 -->
         <dependency>
             <groupId>com.mysql</groupId>

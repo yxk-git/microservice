@@ -9,6 +9,7 @@
     <modules>
         <module>customer</module>
         <module>fraud</module>
+        <module>eureka-service</module>
     </modules>
 
     <groupId>com.microservices</groupId>
@@ -21,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.maven.plugin.version>2.5.15</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>2.5.15</spring.boot.dependencies.version>
+        <spring-cloud.version>2020.0.6</spring-cloud.version>
     </properties>
 
     <!--这个的作用，仅仅只是声明，不直接引用-->
@@ -32,6 +34,13 @@
                 <version>${spring.boot.dependencies.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
