@@ -36,12 +36,18 @@ public class CustomerService {
 
     public void saveCustomer(Customer customer) {
         customerMapper.insert(customer);
-        ResponseEntity<FraudResponse> FraudResponse = fraudController.fraudCheckHistory(customer.getId());
-        log.info("欺骗模块：欺骗模块的回复{}",FraudResponse);
-        if (FraudResponse != null && FraudResponse.getBody() != null) {
-            ResponseEntity<NotificationResponse> notification = notificationController.addNotification(Notification.builder().customerId(customer.getId()).fraudId(FraudResponse.getBody().getId()).build());
+        ResponseEntity<FraudResponse> fraudResponse = fraudController.fraudCheckHistory(customer.getId());
+        log.info("欺骗模块：欺骗模块的回复{}",fraudResponse);
+        if (fraudResponse != null && fraudResponse.getBody() != null) {
+            ResponseEntity<NotificationResponse> notification = notificationController
+                    .addNotification(Notification
+                            .builder()
+                            .customerId(customer.getId())
+                            .fraudId(fraudResponse.getBody().getId())
+                            .isFraudster(fraudResponse.getBody().getIsFraudster())
+                            .build());
             log.info("通知模块：通知模块的回复{}",notification);
-            if (!Objects.requireNonNull(FraudResponse.getBody()).getIsFraudster()) {
+            if (!Objects.requireNonNull(fraudResponse.getBody()).getIsFraudster()) {
                 log.info("这个客户{}不是欺骗者",customer.getId());
             } else {
                 log.info("这个客户{}是欺骗者",customer.getId());

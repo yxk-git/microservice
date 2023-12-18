@@ -5,6 +5,8 @@ import com.microservice.mapper.NotificationMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * @author yxk
  * @version 1.0
@@ -21,6 +23,7 @@ public class NotificationService {
     }
 
     public Notification addNotification(Notification notification) {
+        notification.setCreateAt(LocalDateTime.now());
         notificationMapper.insert(notification);
         log.info("通知模块：收到客户模块通知{}",notification);
         return notification;
