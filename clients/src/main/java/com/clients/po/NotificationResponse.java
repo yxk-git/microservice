@@ -1,4 +1,4 @@
-package com.microcode.customer.po;
+package com.clients.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,23 +10,27 @@ import java.time.LocalDateTime;
 /**
  * @author yxk
  * @version 1.0
- * @date 2023/12/6 19:38
+ * @date 2023/12/18 20:30
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class FraudResponse {
+@NoArgsConstructor
+@AllArgsConstructor
+public class NotificationResponse {
 
-    /*主键ID自增*/
+    /*通知模块的自增ID*/
     private Integer id;
 
     /*客户ID*/
     private Integer customerId;
 
-    /*客户是否有欺骗*/
+    /*欺骗鉴定ID*/
+    private Integer fraudId;
+
+    /*是否是欺骗者*/
     private Boolean isFraudster;
 
-    /*检测时间*/
+    /*时间戳*/
     private LocalDateTime createAt;
+
 }

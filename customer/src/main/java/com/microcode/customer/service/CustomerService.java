@@ -1,16 +1,17 @@
 package com.microcode.customer.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.clients.feign.FraudController;
+import com.clients.feign.NotificationController;
+import com.clients.po.FraudResponse;
+import com.clients.po.Notification;
+import com.clients.po.NotificationResponse;
 import com.microcode.customer.mapper.CustomerMapper;
 import com.microcode.customer.po.Customer;
-import com.microcode.customer.po.FraudResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,15 +29,23 @@ public class CustomerService {
     private CustomerMapper customerMapper;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private FraudController fraudController;
+
+    @Autowired
+    private NotificationController notificationController;
 
     public void saveCustomer(Customer customer) {
         customerMapper.insert(customer);
-        ResponseEntity<FraudResponse> FraudResponse = restTemplate.exchange("http://localhost:8082/api/v1/fraud/fraud-check/{customerId}", HttpMethod.GET, HttpEntity.EMPTY, FraudResponse.class, customer.getId());
-        if (!Objects.requireNonNull(FraudResponse.getBody()).getIsFraudster()) {
-            log.info("这个客户{}不是欺骗者",customer.getId());
-        } else {
-            log.info("这个客户{}是欺骗者",customer.getId());
+        ResponseEntity<FraudResponse> FraudResponse = fraudController.fraudCheckHistory(customer.getId());
+        log.info("欺骗模块：欺骗模块的回复{}",FraudResponse);
+        if (FraudResponse != null && FraudResponse.getBody() != null) {
+            ResponseEntity<NotificationResponse> notification = notificationController.addNotification(Notification.builder().customerId(customer.getId()).fraudId(FraudResponse.getBody().getId()).build());
+            log.info("通知模块：通知模块的回复{}",notification);
+            if (!Objects.requireNonNull(FraudResponse.getBody()).getIsFraudster()) {
+                log.info("这个客户{}不是欺骗者",customer.getId());
+            } else {
+                log.info("这个客户{}是欺骗者",customer.getId());
+            }
         }
     }
 

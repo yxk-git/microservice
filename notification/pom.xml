@@ -9,17 +9,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>customer</artifactId>
-    <version>1.0</version>
+    <artifactId>notification</artifactId>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mybatis.plus.boot.starter.version>3.5.2</mybatis.plus.boot.starter.version>
         <mysql.connector.j.version>8.0.33</mysql.connector.j.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,7 +35,6 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql.connector.j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
